@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # $3: environments (i.e. cuda, omp )
-# $2: platform (i.e. gpu model, a100 or l4 )
+# $2: platform (e.g. gpu model, a100 or l4 )
 # $3: device index (0,1,...)
  
 

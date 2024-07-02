@@ -520,15 +520,15 @@ def collect_rocprof_results(testname, platform, environment, memtype, nruns, out
 
 if __name__ == "__main__":
     # Arguments
-    # sys.argv[1] path of script
-    # sys.argv[2] testname
-    # sys.argv[3] platform (i.e. gpu model)
+    # sys.argv[1] path of this script
+    # sys.argv[2] testname (InvariantMasses or Boost)
+    # sys.argv[3] platform (e.g. gpu model)
     # sys.argv[4] environment ("cuda" for nvidia gpus, "hip" for amd gpus, "cpu"...)
     # sys.argv[5] device index
     # sys.argv[6] sycl memory model ("buf" for buffers+accessors, "ptr" for device pointers)
     # sys.argv[7] number of test repetitions
     # sys.argv[8] output file path
-    
+
     if len(sys.argv) > 8:
         output_file = sys.argv[8]
     else:
