@@ -33,8 +33,8 @@ namespace ROOT {
         where max and min are the extrema of positive values for type
         long double.
      */
-#ifdef ROOT_MATH_SYCL 
-
+#if defined(ROOT_MATH_SYCL) or defined(ROOT_MATH_HIP)  
+__roohost__ __roodevice__
      double etaMax_impl() {
       return mylog ( std::numeric_limits< double>::max()/256.0 ) -
              mylog ( std::numeric_limits< double>::denorm_min()*256.0 )
