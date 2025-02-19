@@ -254,6 +254,23 @@ if (cuda)
   if (timing)
     list(APPEND cuda_compile_list ROOT_MEAS_TIMING)
   endif()
+elseif (alpaka)
+  set(CMAKE_CXX_STANDARD 20)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  set(CMAKE_CXX_EXTENSIONS OFF)
+
+  find_package(Boost 1.74.0 REQUIRED)
+  find_package(alpaka 2.0.0 REQUIRED)
+
+  add_library(SYCLMath SHARED src/MathUtil.cxx)
+  target_compile_options(SYCLMath PRIVATE -DALPAKA_HOST_ONLY
+										  -DALPAKA_ACC_CPU_B_SEQ_T_SEQ_ENABLED)
+  target_include_directories(SYCLMath PRIVATE ${Alpaka_SOURCE_DIR}/include
+											  ${Boost_SOURCE_DIR})
+  list(APPEND alpaka_compile_list ROOT_MATH_ALPAKA)
+  if (timing)
+	list(APPEND alpaka_compile_list ROOT_MEAS_TIMING)
+  endif()
 else()
   add_library(SYCLMath SHARED
   src/MathUtil.cxx
