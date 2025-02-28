@@ -48,6 +48,14 @@
 #define __roohost__ __host__
 #define __rooglobal__ __global__
 
+#elif defined(ROOT_MATH_ALPAKA)
+
+#include <alpaka/alpaka.hpp>
+
+#define __roodevice__ ALPAKA_FN_ACC
+#define __roohost__ ALPAKA_FN_HOST
+#define __rooglobal__
+
 #else
 
 #define __roodevice__ 

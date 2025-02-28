@@ -21,6 +21,11 @@ inline static void __checkCudaErrors(cudaError_t code, const char *file, int lin
   }
 }
 
+#elif defined(ROOT_MATH_ALPAKA)
+
+#include "alpaka/alpakaVecOps.h"
+#include "alpaka/config.h"
+
 #endif
 
 namespace ROOT
