@@ -242,6 +242,16 @@ if (cuda)
   endif()
 endif()
 
+if (hip)
+  include(CheckLanguage)
+  check_language(HIP)
+  if (CMAKE_HIP_COMPILER)
+	enable_language(HIP)
+  else()
+	message(FATAL_ERROR "HIP library not found")
+  endif()
+endif()
+
 if (cuda)
   add_library(SYCLMath SHARED
   src/MathUtil.cxx
@@ -253,6 +263,16 @@ if (cuda)
   list(APPEND cuda_compile_list ROOT_MATH_CUDA)
   if (timing)
     list(APPEND cuda_compile_list ROOT_MEAS_TIMING)
+  endif()
+elseif(hip)
+  add_library(SYCLMath SHARED
+	src/MathUtil.cxx
+  )
+  set_source_files_properties(src/MathUtil.cxx PROPERTIES LANGUAGE HIP)
+  target_compile_definitions(SYCLMath INTERFACE ROOT_MATH_HIP)
+  list(APPEND hip_compile_list ROOT_MATH_HIP)
+  if (timing)
+    list(APPEND hip_compile_list ROOT_MEAS_TIMING)
   endif()
 else()
   add_library(SYCLMath SHARED
@@ -311,7 +331,7 @@ target_link_libraries(GenVectorX PUBLIC SYCLMath)
 target_compile_definitions(GenVectorX PUBLIC ${compile_list})
 
 
-if ((cuda) OR (sycl))
+if ((cuda) OR (sycl) OR (hip))
   add_library(VecOps SHARED
    src/VecOps.cxx
    )
@@ -322,6 +342,10 @@ if ((cuda) OR (sycl))
     target_compile_options(VecOps PRIVATE -rdc=true -lineinfo --expt-relaxed-constexpr)
     set_target_properties(VecOps PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     target_compile_definitions(VecOps PUBLIC ${cuda_compile_list})
+  endif()
+  if (hip)
+	set_source_files_properties(src/VecOps.cxx PROPERTIES LANGUAGE HIP)
+    target_compile_definitions(VecOps PUBLIC ${hip_compile_list})
   endif()
   if (sycl)
      set_target_properties(VecOps PROPERTIES LINKER_LANGUAGE CXX)
