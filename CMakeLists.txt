@@ -371,3 +371,10 @@ endif()
 if (testing)
  add_subdirectory(testx)
 endif()
+
+if (benchmarking)
+    # use google benchmarks
+	set(BENCHMARK_ENABLE_GTEST_TESTS OFF)
+	add_subdirectory(external/benchmark)
+    add_subdirectory(benchmarks)
+endif()
