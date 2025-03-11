@@ -25,11 +25,11 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y cmake g++
 
-    - name: 
+    - name: Build and test
       working-directory: ${{ github.workspace }}
       run: |
         cmake -B build -Dtesting=ON
         cmake --build build -- -j4
-        ./build/test/Boost 100 100
-        ./build/test/InvariantMasses 100 100
+        ./build/testx/Boost 100 100
+        ./build/testx/InvariantMasses 100 100
 
