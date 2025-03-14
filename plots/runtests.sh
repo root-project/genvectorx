@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# $1: platform (i.e. gpu model)
-# $2: device index
+# $3: environments (i.e. cuda, omp )
+# $2: platform (e.g. gpu model, a100 or l4 )
+# $3: device index (0,1,...)
+ 
 
 script="$(dirname "$(readlink -f -- "$0")")/plots.py"
 path="$(dirname "$(readlink -f -- "$0")")/"
