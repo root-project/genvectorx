@@ -7,8 +7,9 @@ list(APPEND alpaka_compile_list_single SINGLE_PRECISION)
 set(cuda_compile_list_single "${cuda_compile_list}")
 list(APPEND cuda_compile_list_single SINGLE_PRECISION)
 
-set(compile_list_single "${compile_list}")
-list(APPEND compile_list_single SINGLE_PRECISION)
+set(hip_compile_list_single "${hip_compile_list}")
+list(APPEND hip_compile_list_single SINGLE_PRECISION)
+
 
 if(alpaka)
 
@@ -356,6 +357,48 @@ if(cuda)
                           PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     target_compile_definitions(SBoostCUDAStreamed
                                PUBLIC ${cuda_compile_list_single})
+  endif()
+
+endif()
+
+if (hip)
+  set_source_files_properties(InvariantMassesHIP.cxx PROPERTIES LANGUAGE HIP)
+  add_executable(InvariantMassesHIP InvariantMassesHIP.cxx)
+  target_link_libraries(InvariantMassesHIP PUBLIC GenVectorX SYCLMath VecOps)
+  target_compile_definitions(InvariantMassesHIP PUBLIC ${hip_compile_list})
+
+  set_source_files_properties(InvariantMassesHIPStreamed.cxx PROPERTIES LANGUAGE HIP)
+  add_executable(InvariantMassesHIPStreamed InvariantMassesHIPStreamed.cxx)
+  target_link_libraries(InvariantMassesHIPStreamed PUBLIC GenVectorX SYCLMath VecOps)
+  target_compile_definitions(InvariantMassesHIPStreamed PUBLIC ${hip_compile_list})
+
+  set_source_files_properties(BoostHIP.cxx PROPERTIES LANGUAGE HIP)
+  add_executable(BoostHIP BoostHIP.cxx)
+  target_link_libraries(BoostHIP PUBLIC GenVectorX SYCLMath VecOps)
+  target_compile_definitions(BoostHIP PUBLIC ${hip_compile_list})
+
+  set_source_files_properties(BoostHIPStreamed.cxx PROPERTIES LANGUAGE HIP)
+  add_executable(BoostHIPStreamed BoostHIPStreamed.cxx)
+  target_link_libraries(BoostHIPStreamed PUBLIC GenVectorX SYCLMath VecOps)
+  target_compile_definitions(BoostHIPStreamed PUBLIC ${hip_compile_list})
+
+  if (single_precision)
+	add_executable(SInvariantMassesHIP InvariantMassesHIP.cxx)
+	target_link_libraries(InvariantMassesHIP PUBLIC GenVectorX SYCLMath VecOps)
+	target_compile_definitions(SInvariantMassesHIP PUBLIC ${hip_compile_list_single})
+
+	add_executable(SInvariantMassesHIPStreamed InvariantMassesHIPStreamed.cxx)
+	target_link_libraries(InvariantMassesHIPStreamed PUBLIC GenVectorX SYCLMath VecOps)
+	target_compile_definitions(SInvariantMassesHIPStreamed PUBLIC ${hip_compile_list_single})
+
+	add_executable(SBoostHIP BoostHIP.cxx)
+	target_link_libraries(SBoostHIP PUBLIC GenVectorX SYCLMath VecOps)
+	target_compile_definitions(SBoostHIP PUBLIC ${hip_compile_list_single})
+
+	add_executable(SBoostHIPStreamed BoostHIPStreamed.cxx)
+	target_link_libraries(SBoostHIPStreamed PUBLIC GenVectorX SYCLMath VecOps)
+	target_compile_definitions(SBoostHIPStreamed PUBLIC ${hip_compile_list_single})
+
   endif()
 
 endif()

@@ -56,6 +56,12 @@
 #define __roohost__ ALPAKA_FN_HOST
 #define __rooglobal__
 
+#elif defined(ROOT_MATH_HIP) && defined(__HIPCC__)
+
+#define __roodevice__ __device__
+#define __roohost__ __host__
+#define __rooglobal__ __global__
+
 #else
 
 #define __roodevice__ 
@@ -150,7 +156,7 @@ template <typename Scalar> Scalar Eta_FromTheta(Scalar theta, Scalar r) {
   }
 }
 
-#elif defined(ROOT_MATH_CUDA)
+#elif defined(ROOT_MATH_CUDA) || defined(ROOT_MATH_HIP)
 template <class Scalar> 
 __roohost__ __roodevice__ Scalar mysin(Scalar x) { return sin(x); }
 
