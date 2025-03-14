@@ -7,8 +7,22 @@ Extented GenVector library for multi-target execution.
 ## CUDA
 A basic CUDA configuration looks like this:
 ```
-cmake .. -Dcuda=ON -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++ -DCMAKE_CUDA_COMPILER=/path/to/cuda/bin/nvcc -DCMAKE_CUDA_ARCHITECTURES=xx -DCMAKE_CUDA_FLAGS="-arch=sm_XX", where `XX` indicates the value of target CUDA capability.  
+cmake .. -Dcuda=ON -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++ -DCMAKE_CUDA_COMPILER=/path/to/cuda/bin/nvcc -DCMAKE_CUDA_ARCHITECTURES=xx -DCMAKE_CUDA_FLAGS="-arch=sm_XX"  
 ```
+where `XX` indicates the value of target CUDA capability.
+
+## HIP
+A basic HIP configuration looks like this:
+```
+cmake .. -Dhip=ON  
+```
+## Alpaka
+A basic alpaka configuration looks like this:
+```
+cmake .. -Dalpaka=ON -Dalpakacpu=ON -Dalpaka_DIR=/home/mdessole/Projects/alpaka/build/lib/cmake/alpaka 
+```
+In order to enable alpaka CUDA, set: `-Dalpakacuda=ON`.
+In order to enable alpaka HIP, set: `-Dalpakahip=ON`
 
 ## SYCL
 
